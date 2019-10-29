@@ -1,2 +1,0 @@
-# AutomationPro-Terraform
-Terraform

@@ -1,0 +1,178 @@
+# Datacenter Name
+# Name of the existing Datacenter where the standalone hosts are registered. New Cluster will be created here
+datacenter_name = "London"
+
+# ESXi hosts to be affected by this configuration
+esxi_hosts = ["esxi1test.automationcore.xtravirt.com","esxi2test.automationcore.xtravirt.com"]
+
+# License keys to register with the vCenter server
+licenses = ["7563K-2YK1K-88H8J-0JA80-ATQQQ", "3163H-2YH9K-R8H8J-01CU4-29QQQ"]
+
+# Cluster Settings
+cluster_name = "Production"
+    drs_enabled = true
+    drs_automation_level = "fullyAutomated"
+    drs_enable_predictive_drs = false
+    ha_enabled = false
+    
+# NFS Datastores
+    nfs_datastore_objects = [
+        {
+        remote_host = "10.0.110.160"
+        remote_path = "NFS_Vol1"
+        nfs_datastore_name = "Prod-nfs-01"
+        },
+        {
+        remote_host = "10.0.110.160"
+        remote_path = "NFS_Vol2"
+        nfs_datastore_name = "Prod-nfs-02"
+        },
+        {
+        remote_host = "10.0.110.160"
+        remote_path = "NFS_Vol3"
+        nfs_datastore_name = "Prod-nfs-03"
+        },
+        {
+        remote_host = "10.0.110.160"
+        remote_path = "NFS_Vol4"
+        nfs_datastore_name = "Prod-nfs-04"
+        }
+    ]
+
+# NFS Datastore Clusters
+    datastore_cluster_name = "Prod-dsc-nfs-01"
+    nfs_datastore_cluster_objects = [
+        {
+        remote_host = "10.0.110.160"
+        remote_path = "NFS_Vol5"
+        nfs_datastore_name = "Prod-nfs-05"
+        },
+        {
+        remote_host = "10.0.110.160"
+        remote_path = "NFS_Vol6"
+        nfs_datastore_name = "Prod-nfs-06"
+        },
+        {
+        remote_host = "10.0.110.160"
+        remote_path = "NFS_Vol7"
+        nfs_datastore_name = "Prod-nfs-07"
+        },
+        {
+        remote_host = "10.0.110.160"
+        remote_path = "NFS_Vol8"
+        nfs_datastore_name = "Prod-nfs-08"
+        }
+    ]
+
+# Production Inventory Tree ( vm folders )
+    inventory_root_folder  = {
+      folderName = "Production Infrastructure"
+      folderType = "vm"
+    }
+
+    inventory_sub_folders = [
+      {
+        folderName = "Database",
+        folderType = "vm"
+      },
+      {
+        folderName = "Web",
+        folderType = "vm"
+      },
+      {
+        folderName = "Load Balancers",
+        folderType = "vm"
+      },
+      {
+        folderName = "Monitoring",
+        folderType = "vm"
+      },
+      {
+        folderName = "Domain Controllers",
+        folderType = "vm"
+      },
+      {
+        folderName = "Utility",
+        folderType = "vm"
+      },
+      {
+        folderName = "Citrix Farm",
+        folderType = "vm"
+      }
+    ]
+
+# dvSwitch
+    switch_name = "Prod-Dv-A"
+    switch_version = "6.5.0"
+    network_interfaces = ["vmnic2","vmnic3","vmnic4","vmnic5"]
+    all_uplinks = ["uplink1","uplink2","uplink3","uplink4"]
+    active_uplinks = ["uplink1","uplink2"]
+    standby_uplinks = ["uplink3","uplink4"]
+    
+# dvSwitch Portgroups
+    portgroup_objects_to_create = [
+      {
+        portgroup_name = "webserver-pg-1"
+        portgroup_vlanId = 401
+        portgroup_type = "earlyBinding"
+        portgroup_description = "vlan401, earlybinding and 30 ports"
+        portgroup_num_of_ports = 30
+        portgroup_auto_expand = false
+      },
+      {
+        portgroup_name = "database-pg-2"
+        portgroup_vlanId = 402
+        portgroup_type = "earlyBinding"
+        portgroup_description = "vlan402, earlybinding and 25 ports"
+        portgroup_num_of_ports = 25
+        portgroup_auto_expand = false
+      },
+      {
+        portgroup_name = "domaincontrollers-pg-3"
+        portgroup_vlanId = 403
+        portgroup_type = "ephemeral"
+        portgroup_description = "vlan401, ephemeral and 100 ports"
+        portgroup_num_of_ports = 50
+        portgroup_auto_expand = false
+      },
+      {
+        portgroup_name = "general-infra-pg-1"
+        portgroup_vlanId = 200
+        portgroup_type = "earlyBinding"
+        portgroup_description = "Production servers on here only please"
+        portgroup_num_of_ports = 90
+        portgroup_auto_expand = false
+      }
+    ]
+
+# Resource Pools
+    resource_pools_to_create = [
+      {
+        resourcePool_name = "web-server-pool"
+        resourcePool_cpu_share_level = "low"
+        resourcePool_cpu_reservation = "0"
+        resourcePool_memory_share_level = "low"
+        resourcePool_memory_reservation = "0"
+      },
+      {
+        resourcePool_name = "database-server-pool"
+        resourcePool_cpu_share_level = "normal"
+        resourcePool_cpu_reservation = "0"
+        resourcePool_memory_share_level = "normal"
+        resourcePool_memory_reservation = "0"
+      },
+      {
+        resourcePool_name = "general-server-pool"
+        resourcePool_cpu_share_level = "high"
+        resourcePool_cpu_reservation = "0"
+        resourcePool_memory_share_level = "high"
+        resourcePool_memory_reservation = "0"
+      },
+      {
+        resourcePool_name = "domain-controller-server-pool"
+        resourcePool_cpu_share_level = "low"
+        resourcePool_cpu_reservation = "0"
+        resourcePool_memory_share_level = "normal"
+        resourcePool_memory_reservation = "0"
+      }
+    ]
