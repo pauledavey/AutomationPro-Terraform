@@ -1,9 +1,12 @@
-variable vcenterCreds {}
+variable vcenter_username {}
+variable vcenter_password {}
+variable vcenter_hostname {}
+variable vm_name {}
 
 provider vsphere {
-  user                 = var.vcenterCreds.vcenter_username
-  password             = var.vcenterCreds.vcenter_password
-  vsphere_server       = var.vcenterCreds.vcenter_hostname
+  user                 = var.vcenter_username
+  password             = var.vcenter_password
+  vsphere_server       = var.vcenter_hostname
   allow_unverified_ssl = true
 }
 
@@ -27,7 +30,7 @@ data "vsphere_network" "network" {
 }
 
 resource "vsphere_virtual_machine" "vm" {
-  name             = "terraform-test"
+  name             = var.vm_name
   resource_pool_id = "${data.vsphere_compute_cluster.cluster.resource_pool_id}"
   datastore_id     = "${data.vsphere_datastore.datastore.id}"
 
