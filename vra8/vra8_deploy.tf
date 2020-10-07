@@ -61,9 +61,9 @@ module "Create_Content_Sharing_For_Content_Source" {
   catalog_source_id_info = module.Create_Content_Source.catalog_source_id_info
 }
 
-module "Storage_Profiles" {
-    source = "./Create_Storage_Profiles"
-    regions = module.CloudAccount.enabled_region
-    cloud_account = var.cloud_account
-    storage_profiles = var.cloud_account.storage_profiles
-}
+#module "Storage_Profiles" {
+#    source = "./Create_Storage_Profiles"
+#    regions = module.CloudAccount.enabled_region
+#    cloud_account = var.cloud_account
+#    storage_profiles = var.cloud_account.storage_profiles
+#}

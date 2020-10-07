@@ -1,0 +1,10 @@
+{
+  "registry.terraform.io/hashicorp/vsphere": {
+    "hash": "h1:0gXrLY4MB1H0leIeEG7wCErkYR73lUXj6Gx9OwesJHQ=",
+    "version": "1.24.0"
+  },
+  "registry.terraform.io/vmware/vra": {
+    "hash": "h1:2S5x7r6YvjlunNyqkptAv7M5qf9W052fYFOqWezczys=",
+    "version": "0.3.2"
+  }
+}
